@@ -1,0 +1,39 @@
+/* app.scss */
+
+/* Styling for card component */
+.card {
+  border-radius: 10px;
+}
+
+.card-header {
+  background-color: pink;
+  color: black;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.btn-primary {
+  background-color: #ffc0cb;
+  border-color: #ffc0cb;
+  color: black;
+}
+
+.btn-primary:hover {
+  background-color: #ffb6c1;
+  border-color: #ffb6c1;
+}
+
+.form-control:focus {
+  border-color: #ffc0cb;
+  box-shadow: 0 0 0 0.2rem rgba(255, 192, 203, 0.25);
+}
+
+.form-check-input:checked {
+  background-color: #ffc0cb;
+  border-color: #ffc0cb;
+}

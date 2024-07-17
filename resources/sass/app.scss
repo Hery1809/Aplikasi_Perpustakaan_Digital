@@ -1,0 +1,189 @@
+/* Import fonts */
+@import url('https://fonts.bunny.net/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap'); /* Import font Dancing Script */
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+/* Background Styles */
+html, body {
+    background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Poppins', sans-serif; /* Font utama untuk seluruh halaman */
+}
+
+/* Centering the Card */
+.card {
+    width: 100%;
+    max-width: 400px; /* Lebar maksimal card */
+    margin: 2rem auto; /* Jarak atas dan bawah otomatis, center card */
+    background-color: rgba(0, 0, 0, 0.5) !important; /* Latar belakang semi-transparan */
+    border-radius: 10px; /* Sudut melengkung pada card */
+    font-family: 'Arial', sans-serif; /* Font untuk card */
+}
+
+/* Card Header */
+.card-header {
+    color: white;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Card Body */
+.card-body {
+    padding: 20px;
+}
+
+/* Primary Button */
+.btn-primary {
+    background-color: yellow; /* Warna kuning */
+    border-color: yellow;
+    color: black;
+}
+
+.btn-primary:hover {
+    background-color: yellow; /* Warna kuning lebih gelap saat hover */
+    border-color: white;
+}
+
+/* Form Control Focus */
+.form-control:focus {
+    border-color: #FFC0CB; /* Warna merah muda */
+    box-shadow: 0 0 0 0.2rem rgba(255, 192, 203, 0.25);
+}
+
+/* Remember Me Checkbox */
+.form-check-input:checked {
+    background-color: blue; /* Warna biru */
+    border-color: #FFC0CB;
+}
+
+/* White Text */
+.text-white {
+    color: white !important;
+}
+
+/* Social Icons */
+.social_icon {
+    font-size: 24px;
+    position: absolute;
+    right: 20px;
+    top: 25px; /* Menurunkan posisi ikon dari bagian atas kartu */
+    transform: translateY(-50%);
+}
+
+.social_icon a {
+    color: yellow;
+}
+
+.social_icon a:hover {
+    color: green; /* Warna saat hover */
+}
+
+/* Input Group Prepend */
+.input-group-prepend span {
+    width: 50px;
+    background-color: #FFC107;
+    color: black;
+    border: 0 !important;
+}
+
+/* Form Focus */
+input:focus {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+}
+
+/* Remember Me */
+.remember {
+    color: white;
+}
+
+.remember input {
+    width: 20px;
+    height: 20px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+/* Login Button */
+.login_btn {
+    color: black;
+    background-color: #FFC107;
+    width: 100px;
+}
+
+.login_btn:hover {
+    color: black;
+    background-color: white;
+}
+
+/* Links */
+.links {
+    color: white;
+}
+
+.links a {
+    margin-left: 4px;
+}
+
+/* Background Color for Login Page */
+body {
+    background-color: #FFFF99; /* Kuning muda */
+}
+
+/* Home Page Styles */
+.home-container {
+    position: relative;
+    padding: 2rem;
+    background: rgba(229, 225, 3, 0.10); /* Latar belakang semi-transparan */
+    border-radius: 10px; /* Sudut melengkung pada container */
+    max-width: 1000px; /* Lebar yang lebih besar untuk menampung teks panjang */
+    margin: 0 auto; /* Pusatkan container */
+    overflow: hidden; /* Sembunyikan elemen yang keluar dari batas container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.10); /* Bayangan halus di sekitar container */
+}
+
+/* Animasi teks bergerak dari kanan ke kiri */
+@keyframes slideRightToLeft {
+    0% {
+        transform: translateX(100%);
+    }
+    50% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Teks dalam Home Page */
+.home-container h1 {
+    font-family: 'Dancing Script', cursive; /* Gunakan font Dancing Script untuk teks */
+    color: #FFD700; /* Warna emas */
+    font-size: 4rem; /* Ukuran font yang lebih besar */
+    font-weight: 700; /* Ketebalan font */
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5); /* Efek bayangan yang lebih besar */
+    white-space: nowrap; /* Mencegah teks dari berpindah baris */
+    animation: slideRightToLeft 12s linear infinite; /* Tambahkan animasi */
+    padding: 1rem; /* Jarak internal teks */
+    text-align: center; /* Pusatkan teks */
+}
+
+/* Container for Home Page */
+.home-container {
+    position: relative;
+    padding: 2rem;
+    background: rgba(229, 225, 3, 0.10); /* Latar belakang semi-transparan */
+    border-radius: 10px; /* Sudut melengkung pada container */
+    max-width: 1000px; /* Lebar yang lebih besar untuk menampung teks panjang */
+    margin: 0 auto; /* Pusatkan container */
+    overflow: hidden; /* Sembunyikan elemen yang keluar dari batas container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.10); /* Bayangan halus di sekitar container */
+}
