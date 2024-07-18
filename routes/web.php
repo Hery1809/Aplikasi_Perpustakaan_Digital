@@ -10,19 +10,18 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
+use App\Models\Book;
 
 Route::get('/', function () {
     return view('home');
 });
-
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', [HomeController::class, 'index'])->middleware('verified');
+// Route::get('/home', [HomeController::class, 'index'])->middleware('verified');
 
 Route::get('/verify', [VerificationController::class, 'show'])->name('verification.notice');
 Route::post('/verify', [VerificationController::class, 'verify'])->name('verification.verify');
@@ -30,9 +29,14 @@ Route::post('/verification/resend', [VerificationController::class, 'resend'])->
 
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
 
-Route::get('/home', function () {
-    return view('empty-home');
-})->middleware('auth');
+Route::get('/home', [HomeController::class, 'indexSearch'])->middleware('auth');
+// Route::get('/home', function () {
+//     $data = [
+//         'searchQuery' => '',
+//         'books' => Book::all(),
+//     ];
+//     return view('empty-home', $data);
+// })->middleware('auth');
 
 // Route::middleware(['admin'])->group(function () {
 //     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
@@ -47,4 +51,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::resource('categories', CategoryController::class);
+
+Route::get('/search', [BookController::class, 'search'])->name('books.search');
+
+Route::get('/books/{book}', 'BookController@show')->name('books.show');
 

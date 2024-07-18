@@ -10,7 +10,7 @@
                     <div class="card-header">Tambah Buku</div>
 
                     <div class="card-body">
-                        <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data" id="form-tambah-buku">
                             @csrf
 
                             <div class="form-group">
@@ -93,4 +93,42 @@
             </div>
         </div>
     </div>
+
+    <!-- Include SweetAlert2 library -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Script to display SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const formTambahBuku = document.getElementById('form-tambah-buku');
+
+            formTambahBuku.addEventListener('submit', function(event) {
+                event.preventDefault(); // Hindari submit default
+
+                // Buat FormData untuk mengirim data file
+                const formData = new FormData(formTambahBuku);
+
+                axios.post(formTambahBuku.action, formData)
+                    .then(response => {
+                        // Tampilkan SweetAlert2 dengan pesan sukses
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Data Berhasil Disimpan',
+                            showConfirmButton: false,
+                            timer: 1500 // Durasi tampilan SweetAlert2 dalam milidetik
+                        });
+
+                        // Redirect atau lakukan tindakan lain setelah berhasil disimpan
+                        setTimeout(() => {
+                            window.location.href = "{{ route('books.index') }}";
+                        }, 1500); // Menunggu 1,5 detik sebelum redirect
+                    })
+                    .catch(error => {
+                        // Handle error jika ada
+                        console.error('Error:', error);
+                    });
+            });
+        });
+    </script>
 @endsection

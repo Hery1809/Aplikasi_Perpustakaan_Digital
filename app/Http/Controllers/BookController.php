@@ -6,27 +6,44 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Category;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 class BookController extends Controller
 {
     public function index(Request $request)
     {
-        // Ambil parameter search dari request
-        $search = $request->input('search');
+        if ($request->ajax()) {
+            $data = Book::query()->with('kategori');
 
-        // Query untuk mengambil data buku dengan relasi kategori
-        $books = Book::query()->with('kategori');
+            if ($search = $request->get('search')['value']) {
+                $data->where('judul', 'like', '%' . $search . '%');
+            }
 
-        // Jika terdapat parameter search, filter berdasarkan judul buku
-        if ($search) {
-            $books->where('judul', 'like', '%' . $search . '%');
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('kategori', function ($row) {
+                    return $row->kategori ? $row->kategori->name : '-';  // Menampilkan nama kategori atau tanda '-' jika tidak ada
+                })
+                ->addColumn('action', function ($row) {
+                    $editUrl = route('books.edit', $row->id);
+                    $deleteUrl = route('books.destroy', $row->id);
+
+                    $btn = '<a href="' . $editUrl . '" class="edit btn btn-primary btn-sm">Edit</a> ';
+                    $btn .= '<form action="' . $deleteUrl . '" method="POST" style="display:inline;">
+                                ' . csrf_field() . '
+                                ' . method_field('DELETE') . '
+                                <button type="submit" class="btn btn-danger btn-sm delete-btn" data-title="Hapus Buku" data-text="Apakah Anda yakin ingin menghapus buku ini?">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
 
-        // Menggunakan paginate untuk membatasi jumlah data per halaman
-        $books = $books->paginate(1); // 10 item per halaman
-
-        // Load view books.index dan passing data books ke view
-        return view('books.index', compact('books'));
+        return view('books.index');
     }
 
     public function create()
@@ -89,6 +106,10 @@ class BookController extends Controller
             'pdf' => $pdfPath,
             'uraian' => $request->uraian,
         ]);
+
+        if ($request->wantsJson()) {
+            return response()->json(['message' => 'Data Berhasil Disimpan'], 200);
+        }
 
         return redirect()->route('books.index')
             ->with('success', 'Book created successfully.');
@@ -168,6 +189,10 @@ class BookController extends Controller
                 'uraian' => $request->uraian,
             ]);
 
+            if ($request->wantsJson()) {
+                return response()->json(['message' => 'Data Berhasil Diupdate'], 200);
+            }
+
             return redirect()->route('books.index')
                 ->with('success', 'Book updated successfully');
         } catch (\Exception $e) {
@@ -188,7 +213,45 @@ class BookController extends Controller
 
         $book->delete();
 
+        if (request()->wantsJson()) {
+            return response()->json(['message' => 'Data Berhasil Dihapus'], 200);
+        }
+
         return redirect()->route('books.index')
             ->with('success', 'Book deleted successfully');
     }
+
+    // public function search(Request $request)
+    // {
+    //     $searchQuery = $request->input('query');
+
+    //     $books = Book::query()
+    //         ->where('judul', 'LIKE', "%{$searchQuery}%") // Pencarian berdasarkan judul
+    //         ->orWhere('penulis', 'LIKE', "%{$searchQuery}%") // Pencarian berdasarkan penulis
+    //         ->orWhereHas('kategori', function ($query) use ($searchQuery) {
+    //             $query->where('name', 'LIKE', "%{$searchQuery}%"); // Pencarian berdasarkan nama kategori
+    //         })
+    //         ->get();
+
+    //     return view('books.search_results', compact('books'));
+    // }
+    public function search(Request $request)
+{
+    $searchQuery = $request->input('query');
+
+    if (!$searchQuery) {
+        $books = collect(); // Menggunakan koleksi kosong jika query kosong
+    } else {
+        $books = Book::query()
+            ->where('judul', 'LIKE', "%{$searchQuery}%") // Pencarian berdasarkan judul
+            ->orWhere('penulis', 'LIKE', "%{$searchQuery}%") // Pencarian berdasarkan penulis
+            ->orWhereHas('kategori', function ($query) use ($searchQuery) {
+                $query->where('name', 'LIKE', "%{$searchQuery}%"); // Pencarian berdasarkan nama kategori
+            })
+            ->get();
+    }
+
+    return view('empty-home', compact('books', 'searchQuery'));
+}
+
 }
