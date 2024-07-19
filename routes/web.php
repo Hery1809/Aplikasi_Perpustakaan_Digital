@@ -16,43 +16,35 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Rute home
+Route::get('/home', [HomeController::class, 'indexSearch'])->middleware('auth')->name('home');
 
-
+// Auth routes with email verification
 Auth::routes(['verify' => true]);
-
-// Route::get('/home', [HomeController::class, 'index'])->middleware('verified');
 
 Route::get('/verify', [VerificationController::class, 'show'])->name('verification.notice');
 Route::post('/verify', [VerificationController::class, 'verify'])->name('verification.verify');
 Route::post('/verification/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 
+// Profile route
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
 
-Route::get('/home', [HomeController::class, 'indexSearch'])->middleware('auth');
-// Route::get('/home', function () {
-//     $data = [
-//         'searchQuery' => '',
-//         'books' => Book::all(),
-//     ];
-//     return view('empty-home', $data);
-// })->middleware('auth');
-
-// Route::middleware(['admin'])->group(function () {
-//     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
-// });
+// Admin dashboard route
 Route::get('/admin', [AdminController::class, 'index'])->middleware('auth')->name('admin.dashboard');
 
+// Grouped routes for authenticated users
 Route::middleware(['auth'])->group(function () {
     Route::resource('books', BookController::class)->except(['show']);
-    Route::get('books/{book}', [BookController::class, 'edit'])->name('books.edit'); // Menentukan rute edit secara eksplisit
-    Route::put('books/{book}', [BookController::class, 'update'])->name('books.update'); // Menentukan rute update secara eksplisit
-    Route::delete('books/{book}', [BookController::class, 'destroy'])->name('books.destroy'); // Menentukan rute destroy secara eksplisit
+    Route::get('books/{book}', [BookController::class, 'edit'])->name('books.edit');
+    Route::put('books/{book}', [BookController::class, 'update'])->name('books.update');
+    Route::delete('books/{book}', [BookController::class, 'destroy'])->name('books.destroy');
 });
 
+// Categories resource route
 Route::resource('categories', CategoryController::class);
 
+// Search route
 Route::get('/search', [BookController::class, 'search'])->name('books.search');
 
-Route::get('/books/{book}', 'BookController@show')->name('books.show');
-
+// Show book details route
+Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show');

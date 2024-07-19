@@ -221,37 +221,29 @@ class BookController extends Controller
             ->with('success', 'Book deleted successfully');
     }
 
-    // public function search(Request $request)
-    // {
-    //     $searchQuery = $request->input('query');
-
-    //     $books = Book::query()
-    //         ->where('judul', 'LIKE', "%{$searchQuery}%") // Pencarian berdasarkan judul
-    //         ->orWhere('penulis', 'LIKE', "%{$searchQuery}%") // Pencarian berdasarkan penulis
-    //         ->orWhereHas('kategori', function ($query) use ($searchQuery) {
-    //             $query->where('name', 'LIKE', "%{$searchQuery}%"); // Pencarian berdasarkan nama kategori
-    //         })
-    //         ->get();
-
-    //     return view('books.search_results', compact('books'));
-    // }
     public function search(Request $request)
-{
-    $searchQuery = $request->input('query');
+    {
+        $searchQuery = $request->query('query', '');  // Mengambil parameter pencarian dari query string, default ke string kosong
 
-    if (!$searchQuery) {
-        $books = collect(); // Menggunakan koleksi kosong jika query kosong
-    } else {
-        $books = Book::query()
-            ->where('judul', 'LIKE', "%{$searchQuery}%") // Pencarian berdasarkan judul
-            ->orWhere('penulis', 'LIKE', "%{$searchQuery}%") // Pencarian berdasarkan penulis
+        // Ambil data buku berdasarkan query pencarian
+        $books = Book::with('kategori')
+            ->where('judul', 'like', "%{$searchQuery}%")
+            ->orWhere('penulis', 'like', "%{$searchQuery}%")
             ->orWhereHas('kategori', function ($query) use ($searchQuery) {
-                $query->where('name', 'LIKE', "%{$searchQuery}%"); // Pencarian berdasarkan nama kategori
+                $query->where('name', 'like', "%{$searchQuery}%"); // Pencarian berdasarkan nama kategori
             })
-            ->get();
+            ->paginate(10);  // Menambahkan paginasi dengan 10 hasil per halaman
+
+        if ($request->ajax()) {
+            return response()->json([
+                'results' => view('partials.search_results', ['books' => $books])->render(),
+                'pagination' => (string) $books->links(),
+            ]);
+        }
+
+        return view('books.search', [
+            'books' => $books,
+            'searchQuery' => $searchQuery,
+        ]);
     }
-
-    return view('empty-home', compact('books', 'searchQuery'));
-}
-
 }

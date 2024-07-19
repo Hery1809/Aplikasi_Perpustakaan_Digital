@@ -1,4 +1,5 @@
 <?php
+namespace App\Http\Controllers;
 
 namespace App\Http\Controllers;
 
@@ -24,16 +25,29 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         return view('home');
     }
 
-    public function indexSearch()
+    /**
+     * Show the search page with books.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function indexSearch(Request $request)
     {
+        $searchQuery = $request->input('search', '');  // Mengambil query pencarian dari parameter GET
+
+        // Ambil data buku berdasarkan query pencarian
+        $books = Book::query()
+            ->where('title', 'like', "%{$searchQuery}%")
+            ->orWhere('author', 'like', "%{$searchQuery}%")
+            ->get();
+
         $data = [
-            'searchQuery' => '',
-            'books' => collect(),
+            'searchQuery' => $searchQuery,
+            'books' => $books,
         ];
-        return view('empty-home', $data);
+
+        return view('books.search', $data);  // Mengarahkan ke view books/search.blade.php
     }
 }
