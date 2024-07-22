@@ -3,6 +3,7 @@
     <table class="table table-striped">
         <thead>
             <tr>
+                <th>Gambar</th>
                 <th>Judul</th>
                 <th>Penulis</th>
                 <th>Kategori</th>
@@ -12,16 +13,23 @@
         <tbody>
             @if ($books->isEmpty())
                 <tr>
-                    <td colspan="4">Buku dengan kata kunci "{{ request('query') }}" tidak ditemukan.</td>
+                    <td colspan="5">Buku dengan kata kunci "{{ request('query') }}" tidak ditemukan.</td>
                 </tr>
             @else
                 @foreach($books as $book)
                     <tr>
+                        <td>
+                            @if($book->gambar)
+                                <img src="{{ asset('storage/' . $book->gambar) }}" alt="Gambar Buku" class="img-thumbnail" style="width: 100px; height: 100px;">
+                            @else
+                                <img src="https://via.placeholder.com/100" alt="Placeholder Image" class="img-thumbnail" style="width: 100px; height: 100px;">
+                            @endif
+                        </td>
                         <td>{{ $book->judul }}</td>
                         <td>{{ $book->penulis }}</td>
                         <td>{{ $book->kategori->name }}</td>
                         <td>
-                            <a href="{{ route('books.show', $book->id) }}" class="btn btn-primary">Lihat</a>
+                            <a href="#" class="btn btn-primary view-pdf" data-pdf-url="{{ asset('storage/' . $book->pdf) }}">Lihat</a>
                         </td>
                     </tr>
                 @endforeach
@@ -31,6 +39,6 @@
 </div>
 
 <!-- Tempat untuk menampilkan pagination -->
-<div id="pagination">
+{{-- <div id="pagination">
     {{ $books->links() }}
-</div>
+</div> --}}
