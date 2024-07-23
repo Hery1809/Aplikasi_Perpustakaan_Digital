@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Models\Book;
+use App\Http\Controllers\UserProfileController;
 
 Route::get('/', function () {
     return view('home');
@@ -28,6 +29,9 @@ Route::post('/verification/resend', [VerificationController::class, 'resend'])->
 
 // Profile route
 Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'index'])->name('profile');
+
+// Memperbarui profil pengguna
+Route::put('/profile', [UserProfileController::class, 'update'])->name('profile.update');
 
 // Admin dashboard route
 Route::get('/admin', [AdminController::class, 'index'])->middleware('auth')->name('admin.dashboard');

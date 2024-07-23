@@ -21,7 +21,7 @@
             <div class="row">
                 <!-- Card box untuk hasil pencarian -->
                 <div class="col-md-4">
-                    <div class="card bg-light shadow-lg border-0" style="width: 100%; overflow-x: auto; margin-top: 1rem;">
+                    <div class="card bg-light shadow-lg border-0 table-responsive" style="width: 100%; overflow-x: auto; margin-top: 1rem;">
                         <div class="card-header fs-4">Hasil Pencarian</div>
                         <div class="card-body" style="padding: 1rem; max-height: 80vh; overflow-y: auto;">
                             <!-- Tempat untuk menampilkan hasil pencarian -->

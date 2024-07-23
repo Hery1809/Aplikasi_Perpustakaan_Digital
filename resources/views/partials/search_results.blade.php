@@ -1,6 +1,6 @@
 <!-- Tampilkan hasil pencarian dalam tabel -->
 <div class="table-responsive">
-    <table class="table table-striped">
+    <table class="table table-dark table-sm">
         <thead>
             <tr>
                 <th>Gambar</th>
