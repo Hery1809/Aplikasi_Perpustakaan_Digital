@@ -14,20 +14,12 @@
 
   <title>Perpustakaan Digital</title>
 
-  <!-- bootstrap core css -->
+  <!-- Bootstrap core CSS -->
   <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap.css') }}" />
-  <!-- progress barstle -->
-  <link rel="stylesheet" href="{{ asset('css/css-circular-prog-bar.css') }}">
-  <!-- fonts style -->
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
-  <!-- font awesome stylesheet -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <!-- Custom styles for this template -->
   <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
-  <!-- responsive style -->
-  <link href="{{ asset('css/responsive.css') }}" rel="stylesheet" />
-
-  <link rel="stylesheet" href="{{ asset('css/css-circular-prog-bar.css') }}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -38,9 +30,7 @@
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="{{ url('/') }}">
             <img src="{{ asset('images/logo.png') }}" alt="">
-            <span>
-              PusDIGI
-            </span>
+            <span>PusDIGI</span>
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,16 +44,16 @@
                   <a class="nav-link" href="{{ url('/') }}"> Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url('about') }}"> About </a>
+                  <a class="nav-link" href="#about-section"> About </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url('teacher') }}"> Teacher </a>
+                  <a class="nav-link" href="#teacher-section"> Teacher </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url('vehicle') }}"> Vehicle </a>
+                  <a class="nav-link" href="#vehicle-section"> Facility </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="{{ url('contact') }}">Contact Us</a>
+                  <a class="nav-link" href="{{ url('contact') }}"> Contact Us </a>
                 </li>
               </ul>
               <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
@@ -88,8 +78,10 @@
             PusDigi
           </h1>
           <p>
-            Discover a world of limitless knowledge with just a few clicks. Explore our vast collection of digital books, rich in information and inspiration.
-            Whether you're looking for resources for research, self-improvement, or simply for entertainment, you'll find it all here.
+            Discover a world of limitless knowledge with just a few clicks. Explore our vast collection of digital books,
+            rich in information and inspiration.
+            Whether you're looking for resources for research, self-improvement, or simply for entertainment, you'll find
+            it all here.
             Happy exploring and happy reading! 🌟📖
           </p>
           <div class="hero_btn-continer">
@@ -111,23 +103,23 @@
     <!-- end hero section -->
 
     <!-- about section -->
-    <section class="about_section layout_padding">
+    <section id="about-section" class="about_section layout_padding">
       <div class="container">
         <h2 class="main-heading">
           About Campus
         </h2>
         <p class="text-center">
-            Visi:
-            National Leading and Globaly Competitive Polytechnic. <br>
-            Misi:
-            Meningkatkan mutu, akses, dan relevansi pendidikan politeknik untuk menghasilkan lulusan sesuai kebutuhan pekerjaan;<br>
-            Melakukan penelitian terapan dan pengabdian masyarakat untuk mengatasi persoalan industri dan masyarakat.
+          Visi:
+          National Leading and Globaly Competitive Polytechnic. <br>
+          Misi:
+          Meningkatkan mutu, akses, dan relevansi pendidikan politeknik untuk menghasilkan lulusan sesuai kebutuhan pekerjaan;<br>
+          Melakukan penelitian terapan dan pengabdian masyarakat untuk mengatasi persoalan industri dan masyarakat.
         </p>
         <div class="about_img-box">
           <img src="{{ asset('images/kids.jpg') }}" alt="" class="img-fluid w-100">
         </div>
         <div class="d-flex justify-content-center mt-5">
-          <a href="{{ url('https://polindra.ac.id/tentang/') }}" class="call_to-btn">
+          <a href="https://polindra.ac.id/tentang/" class="call_to-btn">
             <span>
               Read More
             </span>
@@ -139,7 +131,7 @@
     <!-- about section ends -->
 
     <!-- teacher section -->
-    <section class="teacher_section layout_padding-bottom">
+    <section id="teacher-section" class="teacher_section layout_padding-bottom">
       <div class="container">
         <h2 class="main-heading">
           Our Teachers
@@ -188,7 +180,7 @@
     <!-- teacher section ends -->
 
     <!-- vehicle section -->
-    <section class="vehicle_section layout_padding">
+    <section id="vehicle-section" class="vehicle_section layout_padding">
       <div class="container">
         <h2 class="main-heading">
           E-Book Facility
@@ -354,12 +346,51 @@
     </section>
     <!-- footer section ends -->
 
+    <!-- JavaScript files -->
     <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
 
     <script>
-      // This example adds a marker to indicate the position of Bondi Beach in Sydney,
-      // Australia.
+      // Smooth scrolling for links in navbar except Contact Us
+      $('a[href*="#"]:not([href="#"], [href="#contact"])').on('click', function(event) {
+        if (this.hash !== "") {
+          event.preventDefault();
+
+          var hash = this.hash;
+
+          $('html, body').animate({
+            scrollTop: $(hash).offset().top
+          }, 800, function() {
+            window.location.hash = hash;
+          });
+        }
+      });
+
+      // Hide/show navbar on scroll
+      let lastScrollTop = 0;
+      const navbar = document.querySelector('.header_section');
+
+      window.addEventListener('scroll', function() {
+        let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (currentScroll > lastScrollTop) {
+          // Scroll down
+          navbar.classList.add('hidden');
+        } else {
+          // Scroll up
+          navbar.classList.remove('hidden');
+        }
+
+        lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+      });
+    </script>
+
+    <!-- Google Maps API (replace YOUR_GOOGLE_MAPS_API_KEY with your actual API key) -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+
+    <!-- Custom script for Google Maps -->
+    <script>
+      // Initialize and add the map
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 11,
@@ -380,29 +411,9 @@
         });
       }
     </script>
-    <!-- google map js -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
-    <!-- end google map js -->
+    <!-- End Google Maps script -->
+
   </div>
-  <script>
-    let lastScrollTop = 0;
-    const navbar = document.querySelector('.header_section');
-
-    window.addEventListener('scroll', function() {
-      let currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-      if (currentScroll > lastScrollTop) {
-        // Scroll ke bawah
-        navbar.classList.add('hidden');
-      } else {
-        // Scroll ke atas
-        navbar.classList.remove('hidden');
-      }
-
-      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Untuk menangani kasus scroll ke atas dari posisi 0
-    });
-  </script>
-
 </body>
 
 </html>
