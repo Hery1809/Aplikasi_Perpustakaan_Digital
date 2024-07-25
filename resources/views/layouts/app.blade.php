@@ -116,7 +116,7 @@ Perpustakaan Digital
 <ul class="navbar-nav me-auto"></ul>
 <ul class="navbar-nav ms-auto">
 @guest
-@if (Route::has('login'))
+{{-- @if (Route::has('login'))
 <li class="nav-item">
 <a class="nav-link" href="{{ route('login') }}">
 <i class="fas fa-sign-in-alt"></i> {{ __('Login') }}
@@ -130,7 +130,7 @@ Perpustakaan Digital
 <i class="fas fa-user-plus"></i> {{ __('Register') }}
 </a>
 </li>
-@endif
+@endif --}}
 @else
 <li class="nav-item dropdown">
 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -190,6 +190,7 @@ searchIcon.classList.add('fa-search');
 // Add your search functionality logic here
 });
 });
+
 </script>
 </body>
 </html>
