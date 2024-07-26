@@ -62,6 +62,31 @@
             /* Warna garis bawah saat dihover atau aktif */
         }
     </style>
+
+<style>
+    .hero_img-container {
+        overflow: hidden;
+        position: relative;
+    }
+
+    .hero_img-container img {
+        width: 100%; /* Mengatur lebar gambar agar sesuai dengan kontainer */
+        animation: moveUpDown 5s ease-in-out infinite; /* Mengaplikasikan animasi ke gambar */
+    }
+
+    @keyframes moveUpDown {
+        0% {
+            transform: translateY(0); /* Posisi awal */
+        }
+        50% {
+            transform: translateY(-20px); /* Posisi tengah, geser ke atas */
+        }
+        100% {
+            transform: translateY(0); /* Posisi akhir, kembali ke posisi awal */
+        }
+    }
+</style>
+
 </head>
 
 <body>
@@ -638,11 +663,38 @@
     </script>
 
     <!-- Google Maps API (replace YOUR_GOOGLE_MAPS_API_KEY with your actual API key) -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+    <script>
+        let map;
+
+        async function initMap() {
+            const { Map, Marker, InfoWindow } = await google.maps.importLibrary("maps");
+
+            const location = { lat: -6.627028, lng: 108.218331 }; // Koordinat Politeknik Negeri Indramayu
+
+            map = new Map(document.getElementById("map"), {
+                center: location,
+                zoom: 15,
+            });
+
+            const marker = new Marker({
+                position: location,
+                map: map,
+                title: 'Politeknik Negeri Indramayu',
+            });
+
+            const infoWindow = new InfoWindow({
+                content: '<h3>Politeknik Negeri Indramayu</h3><p>Jl. Lohbener Lama No.08, Legok, Kec. Lohbener, Kabupaten Indramayu, Jawa Barat 45252</p>'
+            });
+
+            marker.addListener('click', () => {
+                infoWindow.open(map, marker);
+            });
+        }
     </script>
 
     <!-- Custom script for Google Maps -->
-    <script>
+    {{-- <script>
         // Initialize and add the map
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
@@ -663,7 +715,7 @@
                 icon: image
             });
         }
-    </script>
+    </script> --}}
     <!-- End Google Maps script -->
 
     <script>
