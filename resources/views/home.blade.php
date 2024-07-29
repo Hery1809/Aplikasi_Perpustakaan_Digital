@@ -204,7 +204,7 @@
         <section id="teacher-section" class="teacher_section layout_padding-bottom">
             <div class="container">
                 <h2 class="main-heading">
-                    Our Teachers
+                    Our Members
                 </h2>
                 <p class="text-center">
                     Ipsum available, but the majority h
