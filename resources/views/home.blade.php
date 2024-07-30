@@ -26,6 +26,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
     <style>
         /* Custom styles for navbar */
         .navbar-nav .nav-item .nav-link {
@@ -459,9 +463,15 @@
                     <div class="form-group row">
                         <label for="loginPassword" class="col-sm-3 col-form-label">Password</label>
                         <div class="col-sm-9">
-                            <input id="loginPassword" type="password" class="form-control @error('password') is-invalid @enderror"
-                                name="password" required autocomplete="current-password" placeholder="Password">
-
+                            <div class="input-group">
+                                <input id="loginPassword" type="password" class="form-control @error('password') is-invalid @enderror"
+                                    name="password" required autocomplete="current-password" placeholder="Password">
+                                <div class="input-group-append">
+                                    <span class="input-group-text password-toggle">
+                                        <i class="fa fa-eye"></i>
+                                    </span>
+                                </div>
+                            </div>
                             @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -469,6 +479,7 @@
                             @enderror
                         </div>
                     </div>
+
 
                     <div class="form-group row">
                         <div class="col-sm-9 offset-sm-3">
@@ -736,6 +747,24 @@
             });
         });
     </script>
+
+<script>
+    $(document).ready(function() {
+        $('.password-toggle').on('click', function() {
+            let passwordField = $('#loginPassword');
+            let passwordFieldType = passwordField.attr('type');
+            let toggleIcon = $(this).find('i');
+
+            if (passwordFieldType === 'password') {
+                passwordField.attr('type', 'text');
+                toggleIcon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                passwordField.attr('type', 'password');
+                toggleIcon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+    });
+</script>
 
 
     <a href="#" class="scroll-to-top">
