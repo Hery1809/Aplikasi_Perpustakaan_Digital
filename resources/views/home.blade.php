@@ -31,6 +31,19 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
     <style>
+        .gradient-custom {
+            /* fallback for old browsers */
+            background: #6a11cb;
+
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+        }
+    </style>
+
+    <style>
         /* Custom styles for navbar */
         .navbar-nav .nav-item .nav-link {
             position: relative;
@@ -90,7 +103,6 @@
         }
     }
 </style>
-
 </head>
 
 <body>
@@ -431,147 +443,18 @@
         <!-- footer section ends -->
 
 <!-- Login Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="loginModalLabel">Sign In</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
+        <div class="modal-content gradient-custom">
+            <div class="modal-body p-5">
                 <!-- Login Form -->
                 <form id="loginForm" method="POST" action="{{ route('login') }}">
                     @csrf
+                    <h2 class="fw-bold mb-2 text-uppercase text-white text-center">Sign In</h2>
+                    <p class="text-white-50 mb-5 text-center">Please enter your login and password!</p>
 
-                    <div class="form-group row">
-                        <label for="loginEmail" class="col-sm-3 col-form-label">Email Address</label>
-                        <div class="col-sm-9">
-                            <input id="loginEmail" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email Address">
-
-                            @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label for="loginPassword" class="col-sm-3 col-form-label">Password</label>
-                        <div class="col-sm-9">
-                            <div class="input-group">
-                                <input id="loginPassword" type="password" class="form-control @error('password') is-invalid @enderror"
-                                    name="password" required autocomplete="current-password" placeholder="Password">
-                                <div class="input-group-append">
-                                    <span class="input-group-text password-toggle">
-                                        <i class="fa fa-eye"></i>
-                                    </span>
-                                </div>
-                            </div>
-                            @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row">
-                        <div class="col-sm-9 offset-sm-3">
-                            <button type="submit" class="btn btn-primary">Login</button>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col text-center">
-                            <p class="mb-0">Belum punya akun? <a href="#" id="showRegisterFormLink">Registrasi</a></p>
-                            <p><a href="{{ route('password.request') }}">Lupa Password?</a></p>
-                        </div>
-                    </div>
-                </form>
-
-                <!-- End Login Form -->
-
-                <!-- Register Form (Initially Hidden) -->
-                <form id="registerForm" method="POST" action="{{ route('register') }}" style="display: none;">
-                    @csrf
-
-                    <div class="input-group form-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-user-circle"></i></span>
-                        </div>
-                        <input id="registerName" type="text" class="form-control @error('name') is-invalid @enderror"
-                               name="name" value="{{ old('name') }}" required autocomplete="name" autofocus
-                               placeholder="Name">
-
-                        @error('name')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-
-                    <div class="input-group form-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-venus-mars"></i></span>
-                        </div>
-                        <select id="jenis_kelamin" class="form-control @error('jenis_kelamin') is-invalid @enderror"
-                                name="jenis_kelamin" required>
-                            <option value="" disabled selected>{{ __('Pilih Jenis Kelamin') }}</option>
-                            <option value="Laki-laki">{{ __('Laki-laki') }}</option>
-                            <option value="Perempuan">{{ __('Perempuan') }}</option>
-                        </select>
-
-                        @error('jenis_kelamin')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-
-                    <div class="input-group form-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-map-marker-alt"></i></span>
-                        </div>
-                        <input id="registerTempatLahir" type="text"
-                               class="form-control @error('tempat_lahir') is-invalid @enderror" name="tempat_lahir"
-                               value="{{ old('tempat_lahir') }}" required placeholder="Tempat Lahir">
-
-                        @error('tempat_lahir')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-
-                    <div class="input-group form-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-calendar-day"></i></span>
-                        </div>
-                        <input id="registerTanggalLahir" type="date"
-                               class="form-control @error('tanggal_lahir') is-invalid @enderror" name="tanggal_lahir"
-                               value="{{ old('tanggal_lahir') }}" required>
-
-                        @error('tanggal_lahir')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-
-                    <div class="input-group form-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-envelope-open-text"></i></span>
-                        </div>
-                        <input id="registerEmail" type="email" class="form-control @error('email') is-invalid @enderror"
-                               name="email" value="{{ old('email') }}" required autocomplete="email"
-                               placeholder="Email Address">
-
+                    <div class="form-outline form-white mb-4">
+                        <input id="loginEmail" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email Address">
                         @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -579,14 +462,8 @@
                         @enderror
                     </div>
 
-                    <div class="input-group form-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                        </div>
-                        <input id="registerPassword" type="password"
-                               class="form-control @error('password') is-invalid @enderror" name="password" required
-                               autocomplete="new-password" placeholder="Password">
-
+                    <div class="form-outline form-white mb-4">
+                        <input id="loginPassword" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
                         @error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -594,47 +471,100 @@
                         @enderror
                     </div>
 
-                    <div class="input-group form-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                        </div>
-                        <input id="registerPasswordConfirm" type="password" class="form-control"
-                               name="password_confirmation" required autocomplete="new-password"
-                               placeholder="Confirm Password">
+                    <p class="small mb-5 pb-lg-2 text-center"><a class="text-white-50" href="{{ route('password.request') }}">Forgot password?</a></p>
+
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
                     </div>
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Register</button>
+                    <div class="d-flex justify-content-center text-center mt-4 pt-1">
+                        <a href="#" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-google fa-lg"></i></a>
                     </div>
 
-                    <!-- Link to toggle to Login Form -->
-                    <p class="text-center mt-3">Jika sudah mempunyai akun silahkan <a href="#" id="showLoginFormLink">Login</a></p>
+                    <p class="mb-0 text-center mt-3">Don't have an account? <a href="#" id="showRegisterFormLink" class="text-white-50 fw-bold">Sign Up</a></p>
+                </form>
 
+                <!-- End Login Form -->
+
+                <!-- Register Form (Initially Hidden) -->
+                <form id="registerForm" method="POST" action="{{ route('register') }}" style="display: none;">
+                    @csrf
+                    <h2 class="fw-bold mb-2 text-uppercase text-white text-center">Register</h2>
+                    <p class="text-white-50 mb-5 text-center">Please enter your details!</p>
+
+                    <div class="form-outline form-white mb-4">
+                        <input id="registerName" type="text" class="form-control form-control-lg @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus placeholder="Name">
+                        @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-outline form-white mb-4">
+                        <select id="jenis_kelamin" class="form-control form-control-lg @error('jenis_kelamin') is-invalid @enderror" name="jenis_kelamin" required>
+                            <option value="" disabled selected>{{ __('Pilih Jenis Kelamin') }}</option>
+                            <option value="Laki-laki">{{ __('Laki-laki') }}</option>
+                            <option value="Perempuan">{{ __('Perempuan') }}</option>
+                        </select>
+                        @error('jenis_kelamin')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-outline form-white mb-4">
+                        <input id="registerTempatLahir" type="text" class="form-control form-control-lg @error('tempat_lahir') is-invalid @enderror" name="tempat_lahir" value="{{ old('tempat_lahir') }}" required placeholder="Tempat Lahir">
+                        @error('tempat_lahir')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-outline form-white mb-4">
+                        <input id="registerTanggalLahir" type="date" class="form-control form-control-lg @error('tanggal_lahir') is-invalid @enderror" name="tanggal_lahir" value="{{ old('tanggal_lahir') }}" required>
+                        @error('tanggal_lahir')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-outline form-white mb-4">
+                        <input id="registerEmail" type="email" class="form-control form-control-lg @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" placeholder="Email Address">
+                        @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-outline form-white mb-4">
+                        <input id="registerPassword" type="password" class="form-control form-control-lg @error('password') is-invalid @enderror" name="password" required autocomplete="new-password" placeholder="Password">
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="form-outline form-white mb-4">
+                        <input id="registerPasswordConfirm" type="password" class="form-control form-control-lg" name="password_confirmation" required autocomplete="new-password" placeholder="Confirm Password">
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>
+                    </div>
+
+                    <p class="text-center mt-3">Already have an account? <a href="#" id="showLoginFormLink" class="text-white-50 fw-bold">Login</a></p>
                 </form>
                 <!-- End Register Form -->
-
-                <script>
-                    // JavaScript to switch between Login and Registration forms
-                    document.getElementById('showRegisterFormLink').addEventListener('click', function(event) {
-                        event.preventDefault();
-                        document.getElementById('loginForm').style.display = 'none';
-                        document.getElementById('registerForm').style.display = 'block';
-                    });
-
-                    document.getElementById('showLoginFormLink').addEventListener('click', function(event) {
-                        event.preventDefault();
-                        document.getElementById('registerForm').style.display = 'none';
-                        document.getElementById('loginForm').style.display = 'block';
-                    });
-                </script>
-
-                <!-- End Register Form -->
             </div>
-        </div>
-    </div>
-</div>
-
-    <!-- JavaScript files -->
+                <!-- JavaScript files -->
     <script type="text/javascript" src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap.js') }}"></script>
 
@@ -763,6 +693,21 @@
                 toggleIcon.removeClass('fa-eye-slash').addClass('fa-eye');
             }
         });
+    });
+</script>
+
+<script>
+    // JavaScript to switch between Login and Registration forms
+    document.getElementById('showRegisterFormLink').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('registerForm').style.display = 'block';
+    });
+
+    document.getElementById('showLoginFormLink').addEventListener('click', function(event) {
+        event.preventDefault();
+        document.getElementById('registerForm').style.display = 'none';
+        document.getElementById('loginForm').style.display = 'block';
     });
 </script>
 
