@@ -27,7 +27,7 @@
             font-family: 'Nunito', sans-serif;
             background: url('/images/buku1.jpg') no-repeat center center fixed;
             background-size: cover;
-            color: #fff;
+            color: #000;
             margin: 0;
             padding: 0;
             display: flex;
