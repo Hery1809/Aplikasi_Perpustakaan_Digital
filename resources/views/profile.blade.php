@@ -14,46 +14,37 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ route('profile.update') }}">
-                            @csrf
-                            @method('PUT')
+                        <div class="d-flex flex-column align-items-center mb-4">
+                            <!-- Display profile picture -->
+                            <img src="{{ Auth::user()->profile_picture ?? asset('images/blank_picture.jpg') }}" class="img-fluid rounded-circle mb-3" width="150" height="150" alt="Profile Picture">
 
-                            <div class="form-group row mb-3">
-                                <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', auth()->user()->name) }}" required autocomplete="name" autofocus>
-
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+                            <!-- Display user name with edit icon -->
+                            <div class="d-flex align-items-center mb-3">
+                                <h4 class="mb-0">{{ Auth::user()->name }}</h4>
+                                <a href="{{ route('account.edit') }}" class="btn btn-link ms-3">
+                                    <i class="bi bi-pencil" style="color: black;"></i> <!-- Black edit icon -->
+                                </a>
                             </div>
 
-                            <div class="form-group row mb-3">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email', auth()->user()->email) }}" required autocomplete="email">
-
-                                    @error('email')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                            <!-- Share Profile section -->
+                            <div class="text-center">
+                                <p><strong>{{ __('Share Profile') }}</strong></p>
+                                <div>
+                                    <!-- WhatsApp share link -->
+                                    <a href="https://wa.me/?text={{ urlencode('Check out this profile: ' . url('/user/' . Auth::id())) }}" class="btn btn-success btn-sm me-2" target="_blank">
+                                        <i class="bi bi-whatsapp"></i> WhatsApp
+                                    </a>
+                                    <!-- Gmail share link -->
+                                    <a href="mailto:?subject=Check out this profile&body={{ urlencode('Check out this profile: ' . url('/user/' . Auth::id())) }}" class="btn btn-danger btn-sm me-2" target="_blank">
+                                        <i class="bi bi-envelope"></i> Gmail
+                                    </a>
+                                    <!-- Facebook share link -->
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url('/user/' . Auth::id())) }}" class="btn btn-primary btn-sm" target="_blank">
+                                        <i class="bi bi-facebook"></i> Facebook
+                                    </a>
                                 </div>
                             </div>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-md-6 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Update Profile') }}
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
