@@ -7,11 +7,11 @@
             <!-- Form Pencarian -->
             <form class="d-flex mb-4" id="search-form" method="GET" action="{{ route('books.search') }}">
                 <div class="input-group" style="max-width: 600px; margin: 0 auto;">
-                    <div id="search-autocomplete" class="form-outline" data-mdb-input-init>
+                    <div id="search-autocomplete" class="form-outline">
                         <input type="search" id="search" class="form-control" name="query" placeholder="Silahkan cari buku Anda di sini" aria-label="Search" value="{{ request('query') }}" />
                         <label class="form-label" for="search">Search</label>
                     </div>
-                    <button type="submit" class="btn btn-primary" data-mdb-ripple-init>
+                    <button type="submit" class="btn btn-primary">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
@@ -22,7 +22,12 @@
                 <!-- Card box untuk hasil pencarian -->
                 <div class="col-md-4">
                     <div class="card bg-light shadow-lg border-0 table-responsive" style="width: 100%; overflow-x: auto; margin-top: 1rem;">
-                        <div class="card-header fs-4">Hasil Pencarian</div>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span class="fs-4">Hasil Pencarian</span>
+                            <button id="close-preview-search" class="btn btn-danger btn-sm">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
                         <div class="card-body" style="padding: 1rem; max-height: 80vh; overflow-y: auto;">
                             <!-- Tempat untuk menampilkan hasil pencarian -->
                             <div id="result">
@@ -41,7 +46,7 @@
                                 <button id="fullscreen-toggle" class="btn btn-secondary btn-sm" disabled>
                                     <i class="fas fa-expand"></i>
                                 </button>
-                                <button id="close-preview" class="btn btn-danger btn-sm">
+                                <button id="close-preview-pdf" class="btn btn-danger btn-sm">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
@@ -104,11 +109,17 @@
             $('#fullscreen-toggle').prop('disabled', false); // Enable fullscreen button when PDF is loaded
         });
 
-        // Event listener untuk tombol close preview
-        $('#close-preview').on('click', function() {
-            $('#pdf-preview-card').hide(); // Sembunyikan card preview
+        // Event listener untuk tombol close preview PDF
+        $(document).on('click', '#close-preview-pdf', function() {
+            $('#pdf-preview-card').hide(); // Sembunyikan card preview PDF
             $('#pdf-viewer').attr('src', ''); // Kosongkan src iframe
             $('#fullscreen-toggle').prop('disabled', true); // Disable fullscreen button
+        });
+
+        // Event listener untuk tombol close preview search results
+        $(document).on('click', '#close-preview-search', function() {
+            $('#result').empty(); // Kosongkan hasil pencarian
+            $('#search').val(''); // Kosongkan input pencarian
         });
 
         // Event listener untuk tombol full screen untuk PDF
@@ -181,7 +192,7 @@
         height: 100%;
     }
 
-    #epub-preview-card {
+    #pdf-preview-card {
         transition: margin-left 0.5s; /* Transisi halus untuk pergeseran card preview */
     }
 
