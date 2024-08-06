@@ -161,31 +161,34 @@
     </li>
     @endif --}}
                             @else
-                                <li class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        <i class="fas fa-user"></i> {{ Auth::user()->name }}
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('images/blank_picture.jpg') }}"
+                                         alt="Profile Picture"
+                                         class="rounded-circle"
+                                         width="40"
+                                         height="40">
+                                    <span class="ms-2">{{ Auth::user()->name }}</span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('profile') }}">
+                                        <i class="fas fa-user"></i> {{ __('Profile') }}
                                     </a>
-
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('profile') }}">
-                                            <i class="fas fa-user"></i> {{ __('Profile') }}
-                                        </a>
-                                        <a class="dropdown-item" href="{{ route('edit.account') }}">
-                                            <i class="fas fa-edit"></i> {{ __('Edit Account') }}
-                                        </a>
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-    document.getElementById('logout-form').submit();">
-                                            <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
-                                    </div>
-                                </li>
-                            @endguest
+                                    <a class="dropdown-item" href="{{ route('edit.account') }}">
+                                        <i class="fas fa-edit"></i> {{ __('Edit Account') }}
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                        <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>                                                        @endguest
                         </ul>
                     </div>
                 </div>
