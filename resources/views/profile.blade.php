@@ -16,7 +16,7 @@
 
                         <div class="d-flex flex-column align-items-center mb-4">
                             <!-- Display profile picture -->
-                            <img src="{{ Auth::user()->profile_picture ?? asset('images/blank_picture.jpg') }}" class="img-fluid rounded-circle mb-3" width="150" height="150" alt="Profile Picture">
+                            <img src="{{ Auth::user()->profile_picture ? asset('storage/' . Auth::user()->profile_picture) : asset('images/blank_picture.jpg') }}" class="img-fluid rounded-circle mb-3" width="150" height="150" alt="Profile Picture">
 
                             <!-- Display user name with edit icon -->
                             <div class="d-flex align-items-center mb-3">

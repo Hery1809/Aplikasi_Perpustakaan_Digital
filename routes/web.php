@@ -10,6 +10,7 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\ProfileController;
 use App\Models\Book;
 
 Route::get('/', function () {
@@ -54,3 +55,6 @@ Route::get('/books/{book}', [BookController::class, 'show'])->name('books.show')
 Route::get('/edit-account', [AccountController::class, 'edit'])->middleware('auth')->name('edit.account');
 Route::post('/update-account', [AccountController::class, 'update'])->middleware('auth')->name('update.account');
 Route::get('/account/edit', [AccountController::class, 'edit'])->name('account.edit');
+Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::post('/update-account', [ProfileController::class, 'update'])->name('update.account');
+
