@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <!-- Form Pencarian -->
             <form class="d-flex mb-4" id="search-form" method="GET" action="{{ route('books.search') }}">
-                <div class="input-group" style="max-width: 600px; margin: 0 auto;">
+                <div class="input-group" style="max-width: 600px;">
                     <div id="search-autocomplete" class="form-outline">
                         <input type="search" id="search" class="form-control" name="query" placeholder="Silahkan cari buku Anda di sini" aria-label="Search" value="{{ request('query') }}" />
                         <label class="form-label" for="search">Search</label>
@@ -17,29 +17,19 @@
                 </div>
             </form>
 
-            <!-- Row untuk card box dan PDF viewer -->
+            <!-- Row untuk hasil pencarian dan PDF viewer -->
             <div class="row">
-                <!-- Card box untuk hasil pencarian -->
-                <div class="col-md-4">
-                    <div class="card bg-light shadow-lg border-0 table-responsive" style="width: 100%; overflow-x: auto; margin-top: 1rem;">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <span class="fs-4">Hasil Pencarian</span>
-                            <button id="close-preview-search" class="btn btn-danger btn-sm">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <div class="card-body" style="padding: 1rem; max-height: 80vh; overflow-y: auto;">
-                            <!-- Tempat untuk menampilkan hasil pencarian -->
-                            <div id="result">
-                                @include('partials.search_results', ['books' => $books])
-                            </div>
-                        </div>
+                <!-- Tempat untuk menampilkan hasil pencarian -->
+                <div class="col-md-12" id="search-results">
+                    <!-- Tempat untuk menampilkan hasil pencarian -->
+                    <div id="result">
+                        @include('partials.search_results', ['books' => $books])
                     </div>
                 </div>
 
                 <!-- Tempat untuk menampilkan PDF di sebelah kanan -->
                 <div class="col-md-8">
-                    <div id="pdf-preview-card" class="card bg-light shadow-lg border-0" style="width: 100%; height: 60vh; margin-top: 1rem; display: none;">
+                    <div id="pdf-preview-card" class="card shadow-lg border-0" style="width: 100%; height: 60vh; margin-top: 1rem; display: none;">
                         <div class="card-header fs-4 d-flex justify-content-between align-items-center">
                             Preview PDF
                             <div>
@@ -179,29 +169,57 @@
                 $('#fullscreen-toggle').html('<i class="fas fa-compress"></i>');
             }
         });
+
+        // Animasi untuk form pencarian
+        $('#search-form').hide().slideDown(1000);
+
+        // Animasi untuk hasil pencarian
+        $('#search-results').hide().fadeIn(1000);
     });
 </script>
 
-<!-- CSS untuk Menyelaraskan Card Box -->
+<!-- CSS untuk Menyelaraskan Elemen dan Animasi -->
 <style>
-    /* CSS untuk menyelaraskan card box hasil pencarian ke tengah */
-    .card-search-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-    }
+    /* CSS untuk menyelaraskan form pencarian ke kiri */
+    /* CSS untuk menyelaraskan form pencarian ke kiri */
+#search-form {
+    margin-left: 0;
+    margin-right: auto;
+    display: none; /* Mulai dengan tersembunyi untuk animasi */
+}
 
-    #pdf-preview-card {
-        transition: margin-left 0.5s; /* Transisi halus untuk pergeseran card preview */
-    }
+/* CSS untuk hasil pencarian */
+#search-results {
+    display: none; /* Mulai dengan tersembunyi untuk animasi */
+    background: none; /* Tidak ada latar belakang */
+}
 
-    .shift-left {
-        margin-left: 0; /* Posisi normal card preview */
-    }
+/* Gaya gambar buku */
+.book-image {
+    width: 300px; /* Ukuran gambar buku yang lebih besar */
+    height: 450px; /* Ukuran gambar buku yang lebih besar */
+    object-fit: cover; /* Menyesuaikan ukuran gambar tanpa distorsi */
+    border: 1px solid #ddd; /* Garis batas untuk memberikan efek buku */
+    border-radius: 5px; /* Sudut yang sedikit membulat */
+}
 
-    .shift-right {
-        margin-left: -100%; /* Geser card preview ke kiri (di luar tampilan) */
-    }
+/* Penataan item buku */
+.book-item {
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    background: none; /* Tidak ada latar belakang */
+    padding: 1rem;
+}
+
+.book-details {
+    flex: 1;
+}
+
+.book-title {
+    font-size: 1.5rem; /* Ukuran font yang lebih besar */
+    font-weight: bold;
+}
 </style>
 @endsection

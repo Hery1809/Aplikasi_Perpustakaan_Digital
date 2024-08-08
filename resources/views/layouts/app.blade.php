@@ -169,7 +169,7 @@
                                      class="rounded-circle"
                                      width="40"
                                      height="40">
-                                <span class="ms-2">{{ Auth::user()->name }}</span>
+                                     <span class="ms-2">{{ __('My Profile') }}</span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

@@ -12,9 +12,9 @@
         </thead>
         <tbody>
             @if ($books->isEmpty())
-                <tr>
+                {{-- <tr>
                     <td colspan="5">Buku dengan kata kunci "{{ request('query') }}" tidak ditemukan.</td>
-                </tr>
+                </tr> --}}
             @else
                 @foreach($books as $book)
                     <tr>
